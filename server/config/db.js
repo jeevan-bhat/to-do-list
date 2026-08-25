@@ -1,71 +1,57 @@
 // ------------------------------------------------------------------
 // config/db.js
 // ------------------------------------------------------------------
-// Responsible for connecting the Express app to MongoDB using Mongoose.
-// Supports MongoDB Atlas, local MongoDB, and in-memory fallback.
+// Connects to MongoDB Atlas or local MongoDB using Mongoose.
+// If no external MongoDB is reachable, the application seamlessly
+// uses the zero-overhead built-in memory store in models/Note.js.
 // ------------------------------------------------------------------
 
 const mongoose = require("mongoose");
 
-let memoryServer = null;
-
 /**
  * Connect to MongoDB.
- * Returns the connection type used: "external", "local", or "in-memory".
+ * Returns true if connected to MongoDB Atlas / local MongoDB, false otherwise.
  */
 async function connectDB() {
   const uri = process.env.MONGODB_URI;
-  const allowFallback = process.env.USE_MEMORY_DB_FALLBACK !== "false";
 
   mongoose.set("strictQuery", true);
 
   // 1. If explicit MONGODB_URI is provided (e.g. from MongoDB Atlas)
   if (uri && uri !== "mongodb://127.0.0.1:27017/notesapp") {
     try {
-      await mongoose.connect(uri, { serverSelectionTimeoutMS: 5000 });
+      await mongoose.connect(uri, { serverSelectionTimeoutMS: 4000 });
       const safeUri = uri.replace(/\/\/.*@/, "//<credentials>@");
-      console.log(`✅ Connected to MongoDB Atlas at ${safeUri}`);
-      return "external";
+      console.log(`✅ Connected to MongoDB Atlas: ${safeUri}`);
+      return true;
     } catch (err) {
       console.warn(`⚠️ Could not connect to external MongoDB: ${err.message}`);
-      if (!allowFallback) throw err;
     }
   }
 
   // 2. Try default local MongoDB
   const localUri = uri || "mongodb://127.0.0.1:27017/notesapp";
   try {
-    await mongoose.connect(localUri, { serverSelectionTimeoutMS: 2500 });
-    console.log(`✅ Connected to local MongoDB at ${localUri}`);
-    return "local";
+    await mongoose.connect(localUri, { serverSelectionTimeoutMS: 1500 });
+    console.log(`✅ Connected to local MongoDB: ${localUri}`);
+    return true;
   } catch (err) {
-    if (!allowFallback) throw err;
+    // Local DB not running
   }
 
-  // 3. Fallback: In-memory MongoDB
-  try {
-    console.log("↩️  Falling back to in-memory MongoDB...");
-    const { MongoMemoryServer } = require("mongodb-memory-server");
-    memoryServer = await MongoMemoryServer.create();
-    const memUri = memoryServer.getUri();
-    await mongoose.connect(memUri);
-    console.log("✅ Connected to in-memory MongoDB (temporary storage)");
-    return "in-memory";
-  } catch (memErr) {
-    console.warn("⚠️ In-memory MongoDB could not be started:", memErr.message);
-    console.warn("💡 Tip: For persistent storage on Render, set MONGODB_URI in Render Dashboard → Environment Variables.");
-  }
+  // 3. Fast built-in in-memory fallback
+  console.log("⚡ Running with built-in instant in-memory storage engine.");
+  console.log("💡 Tip: For persistent storage, set MONGODB_URI in Render Dashboard → Environment Variables.");
+  return false;
 }
 
 /**
- * Cleanly close the DB connection (and stop the in-memory server if used).
+ * Cleanly close the DB connection when the server is shutting down.
  */
 async function disconnectDB() {
   try {
-    await mongoose.connection.close();
-    if (memoryServer) {
-      await memoryServer.stop();
-      memoryServer = null;
+    if (mongoose.connection && mongoose.connection.readyState === 1) {
+      await mongoose.connection.close();
     }
   } catch (err) {
     console.error("Error during DB disconnect:", err.message);
