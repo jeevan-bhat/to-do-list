@@ -51,56 +51,55 @@ A modern, high-performance **Full-Stack Notes Application** built with **React, 
 
 ```
 crud_app/
+├── client/                  # React (Vite) frontend application
+│   ├── src/
+│   │   ├── components/      # NoteForm, NoteItem, NoteList, Toast, ConfirmModal, Icons
+│   │   ├── api.js           # Centralized API fetch wrapper
+│   │   ├── App.jsx          # Top-level state, search, filter, theme management
+│   │   ├── App.css          # Glassmorphic component styles & layouts
+│   │   ├── index.css        # Design tokens for light/dark modes & global resets
+│   │   └── main.jsx         # React entry point
+│   ├── index.html           # HTML template with Google Fonts
+│   ├── vite.config.js       # Vite dev server with proxy to backend (:5000)
+│   └── package.json
+│
+├── server/                  # Express.js + MongoDB REST API backend
+│   ├── config/db.js         # MongoDB connection (with in-memory fallback)
+│   ├── middleware/          # Centralized error handling
+│   ├── models/Note.js       # Mongoose schema (title, content, category, color, pinned, tags)
+│   ├── routes/notes.js      # RESTful CRUD routes (/api/notes)
+│   ├── server.js            # Server entry point
+│   ├── requests.http        # Ready-to-run HTTP requests for testing
+│   ├── .env.example         # Sample environment config
+│   └── package.json
+│
 ├── screenshots/             # Application preview screenshots
 │   ├── dark-mode-preview.jpg
 │   ├── light-mode-preview.jpg
 │   └── responsive-preview.jpg
 │
-└── notes app/
-    ├── server/              # Express.js + MongoDB REST API backend
-    │   ├── config/db.js     # MongoDB connection (with in-memory fallback)
-    │   ├── middleware/      # Centralized error handling
-    │   ├── models/Note.js   # Mongoose schema (title, content, category, color, pinned, tags)
-    │   ├── routes/notes.js  # RESTful CRUD routes (/api/notes)
-    │   ├── server.js        # Server entry point
-    │   └── requests.http    # Ready-to-run HTTP requests for testing
-    │
-    ├── client/              # React (Vite) frontend application
-    │   ├── src/
-    │   │   ├── components/  # NoteForm, NoteItem, NoteList, Toast, ConfirmModal, Icons
-    │   │   ├── api.js       # Centralized API fetch wrapper
-    │   │   ├── App.jsx      # Top-level state, search, filter, theme management
-    │   │   ├── App.css      # Glassmorphic component styles & layouts
-    │   │   └── index.css    # Design tokens for light/dark modes & global resets
-    │   ├── index.html       # HTML template with Google Fonts
-    │   └── vite.config.js   # Vite dev server with proxy to backend (:5000)
-    │
-    └── README.md
+├── package.json             # Root monorepo scripts (build & start)
+├── render.yaml              # Render 1-click deployment Blueprint
+└── README.md
 ```
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Getting Started Locally
 
-### 1. Start the Backend
-
-```bash
-cd "notes app/server"
-npm install
-npm run dev               # Starts API server on http://localhost:5000
-```
-
-> **Note:** If you don't have MongoDB installed locally, the server automatically starts a temporary in-memory MongoDB database so you can start right away without setup!
-
-### 2. Start the Frontend
+### Quick Start (From Root)
 
 ```bash
-cd "notes app/client"
-npm install
-npm run dev               # Starts React Vite dev server on http://localhost:5173
+# 1. Install all dependencies and build client
+npm run install:all
+npm run build:client
+
+# 2. Start both backend and frontend
+npm run dev:server      # Starts Express API on http://localhost:5000
+npm run dev:client      # Starts React Vite on http://localhost:5173
 ```
 
-Open **http://localhost:5173** in your web browser to use the app.
+> **Note:** If you don't have MongoDB installed locally, the server automatically starts a temporary in-memory MongoDB database so you can start right away without any setup!
 
 ---
 
