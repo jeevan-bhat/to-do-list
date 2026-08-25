@@ -49,8 +49,16 @@ app.get("/api/health", (_req, res) => {
 app.use("/api/notes", notesRouter);
 
 // ---- Production Static Serving ------------------------------------
-const clientDist = path.join(__dirname, "../client/dist");
+const fs = require("fs");
+const possibleDistPaths = [
+  path.resolve(__dirname, "../client/dist"),
+  path.resolve(__dirname, "./client/dist"),
+  path.resolve(process.cwd(), "client/dist"),
+  path.resolve(process.cwd(), "dist"),
+];
+const clientDist = possibleDistPaths.find((p) => fs.existsSync(p)) || possibleDistPaths[0];
 
+console.log(`📦 Serving static client from: ${clientDist}`);
 app.use(express.static(clientDist));
 
 app.get("*", (req, res, next) => {
@@ -59,9 +67,12 @@ app.get("*", (req, res, next) => {
     return res.status(404).json({ message: `Route not found: ${req.method} ${req.url}` });
   }
   // Otherwise send the React app's index.html
-  res.sendFile(path.join(clientDist, "index.html"), (err) => {
-    if (err) next();
-  });
+  const indexPath = path.join(clientDist, "index.html");
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    next();
+  }
 });
 
 // If no route matched, return a 404 JSON response.

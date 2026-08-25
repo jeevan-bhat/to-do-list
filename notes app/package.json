@@ -1,0 +1,9 @@
+{
+  "name": "notes-app-proxy",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "build": "cd .. && npm run build",
+    "start": "node ../server/server.js"
+  }
+}
