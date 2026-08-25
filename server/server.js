@@ -10,7 +10,11 @@
 // Run it with:   npm run dev   (auto-reload)   or   npm start
 // ------------------------------------------------------------------
 
-require("dotenv").config();
+try {
+  require("dotenv").config();
+} catch (err) {
+  // In cloud environments (Render, Railway), env vars are provided directly via process.env
+}
 
 const express = require("express");
 const cors = require("cors");

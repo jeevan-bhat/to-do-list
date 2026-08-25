@@ -1,17 +1,12 @@
 services:
   - type: web
-    name: notes-crud-app
+    name: to-do-list
     env: node
     plan: free
-    buildCommand: npm run build
-    startCommand: npm start
+    buildCommand: npm install && npm --prefix client install && npm --prefix client run build
+    startCommand: node server/server.js
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 10000
-      - key: USE_MEMORY_DB_FALLBACK
-        value: "true"
-      # Optional: Add your MongoDB Atlas connection string in Render dashboard:
-      # - key: MONGODB_URI
-      #   value: mongodb+srv://<user>:<password>@<cluster>.mongodb.net/notesapp
