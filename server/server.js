@@ -75,25 +75,26 @@ app.use(errorHandler);
 // ---- Start up -----------------------------------------------------
 
 async function start() {
+  // Bind to 0.0.0.0 immediately so cloud hosting providers (Render, Railway) detect the healthy port
+  const server = app.listen(PORT, "0.0.0.0", () => {
+    console.log(`🚀 Server listening on http://0.0.0.0:${PORT}`);
+  });
+
   try {
     await connectDB();
-    const server = app.listen(PORT, () => {
-      console.log(`🚀 Server listening on http://localhost:${PORT}`);
-    });
-
-    // Gracefully close the DB connection on Ctrl+C / termination.
-    const shutdown = async () => {
-      console.log("\nShutting down...");
-      server.close();
-      await disconnectDB();
-      process.exit(0);
-    };
-    process.on("SIGINT", shutdown);
-    process.on("SIGTERM", shutdown);
   } catch (err) {
-    console.error("Failed to start server:", err.message);
-    process.exit(1);
+    console.warn("⚠️ Database initialization warning:", err.message);
   }
+
+  // Gracefully close the DB connection on Ctrl+C / termination.
+  const shutdown = async () => {
+    console.log("\nShutting down...");
+    server.close();
+    await disconnectDB();
+    process.exit(0);
+  };
+  process.on("SIGINT", shutdown);
+  process.on("SIGTERM", shutdown);
 }
 
 start();
