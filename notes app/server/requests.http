@@ -1,0 +1,59 @@
+###############################################################################
+# requests.http  —  quick manual tests for the Notes API
+#
+# HOW TO USE:
+#   1. Start the backend:  cd server  &&  npm run dev
+#   2. Open this file in VS Code with the "REST Client" extension installed
+#      (or JetBrains' built-in HTTP client).
+#   3. Click the "Send Request" link that appears above each request below.
+#
+# The create request is named (# @name create) so the requests that follow
+# can reuse the new note's id automatically via {{create.response.body.id}}.
+###############################################################################
+
+@baseUrl = http://localhost:5000
+
+### Health check — confirms the server is running
+GET {{baseUrl}}/api/health
+
+### CREATE a note
+# @name create
+POST {{baseUrl}}/api/notes
+Content-Type: application/json
+
+{
+  "title": "My first note",
+  "content": "Hello from the REST client!"
+}
+
+### Grab the id returned by the CREATE request above
+@noteId = {{create.response.body.id}}
+
+### READ all notes
+GET {{baseUrl}}/api/notes
+
+### READ one note (by the id captured above)
+GET {{baseUrl}}/api/notes/{{noteId}}
+
+### UPDATE the note
+PUT {{baseUrl}}/api/notes/{{noteId}}
+Content-Type: application/json
+
+{
+  "title": "My first note (edited)",
+  "content": "This content was updated via PUT."
+}
+
+### DELETE the note
+DELETE {{baseUrl}}/api/notes/{{noteId}}
+
+### (Optional) Try an invalid id to see the 400 error response
+GET {{baseUrl}}/api/notes/not-a-real-id
+
+### (Optional) Try creating a note with no title to see the 400 validation error
+POST {{baseUrl}}/api/notes
+Content-Type: application/json
+
+{
+  "content": "This should fail because there is no title."
+}

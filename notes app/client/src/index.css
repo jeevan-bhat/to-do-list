@@ -1,0 +1,215 @@
+/* ------------------------------------------------------------------
+   src/index.css  —  Modern Design Tokens & Global Base
+   ------------------------------------------------------------------ */
+
+:root {
+  color-scheme: light;
+
+  /* Surface & Backgrounds (Light Mode) */
+  --bg-app: #f8fafc;
+  --bg-app-gradient: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
+                     radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.05) 0px, transparent 50%),
+                     radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.04) 0px, transparent 50%),
+                     #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-glass: rgba(255, 255, 255, 0.82);
+  --bg-surface-elevated: #ffffff;
+  --bg-input: #f8fafc;
+  --bg-input-focus: #ffffff;
+  --bg-hover: #f1f5f9;
+  --bg-pill: #f1f5f9;
+  --bg-pill-hover: #e2e8f0;
+
+  /* Lines & Borders */
+  --border-subtle: #e2e8f0;
+  --border-medium: #cbd5e1;
+  --border-glass: rgba(255, 255, 255, 0.6);
+  --border-focus: #6366f1;
+
+  /* Typography / Text */
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-faint: #94a3b8;
+  --text-inverse: #ffffff;
+
+  /* Brand Accents */
+  --brand-primary: #6366f1;
+  --brand-primary-hover: #4f46e5;
+  --brand-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --brand-glow: 0 8px 24px -4px rgba(99, 102, 241, 0.28);
+
+  /* Semantic status */
+  --color-danger: #ef4444;
+  --color-danger-hover: #dc2626;
+  --color-danger-bg: #fef2f2;
+  --color-danger-border: #fecaca;
+
+  --color-success: #10b981;
+  --color-success-bg: #ecfdf5;
+  --color-success-border: #a7f3d0;
+
+  --color-warning: #f59e0b;
+  --color-warning-bg: #fffbeb;
+  --color-warning-border: #fde68a;
+
+  /* Note Color Accent Themes */
+  --color-amber-bg: #fffbeb;
+  --color-amber-border: #fcd34d;
+  --color-emerald-bg: #ecfdf5;
+  --color-emerald-border: #6ee7b7;
+  --color-indigo-bg: #eef2ff;
+  --color-indigo-border: #a5b4fc;
+  --color-rose-bg: #fff1f2;
+  --color-rose-border: #fda4af;
+  --color-sky-bg: #f0f9ff;
+  --color-sky-border: #7dd3fc;
+  --color-violet-bg: #faf5ff;
+  --color-violet-border: #d8b4fe;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 2px 6px -1px rgba(15, 23, 42, 0.06), 0 1px 3px -1px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 8px 20px -4px rgba(15, 23, 42, 0.08), 0 4px 8px -3px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 16px 32px -8px rgba(15, 23, 42, 0.12), 0 6px 12px -4px rgba(15, 23, 42, 0.06);
+  --shadow-xl: 0 24px 48px -12px rgba(15, 23, 42, 0.18);
+
+  /* Radius */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-family-display: "Outfit", "Plus Jakarta Sans", sans-serif;
+  --font-family-body: "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-hand: "Caveat", cursive;
+}
+
+/* Dark Theme Variables */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg-app: #090d16;
+  --bg-app-gradient: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
+                     radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.1) 0px, transparent 50%),
+                     radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.08) 0px, transparent 50%),
+                     #090d16;
+  --bg-surface: #111827;
+  --bg-surface-glass: rgba(17, 24, 39, 0.85);
+  --bg-surface-elevated: #1e293b;
+  --bg-input: #151d2e;
+  --bg-input-focus: #1a2438;
+  --bg-hover: #1f293d;
+  --bg-pill: #1a2234;
+  --bg-pill-hover: #242f48;
+
+  --border-subtle: #1e293b;
+  --border-medium: #334155;
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-focus: #818cf8;
+
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-faint: #64748b;
+  --text-inverse: #0f172a;
+
+  --brand-primary: #818cf8;
+  --brand-primary-hover: #6366f1;
+  --brand-glow: 0 8px 28px -4px rgba(129, 140, 248, 0.35);
+
+  --color-danger: #f87171;
+  --color-danger-hover: #ef4444;
+  --color-danger-bg: rgba(239, 68, 68, 0.12);
+  --color-danger-border: rgba(239, 68, 68, 0.3);
+
+  --color-success: #34d399;
+  --color-success-bg: rgba(16, 185, 129, 0.12);
+  --color-success-border: rgba(16, 185, 129, 0.3);
+
+  --color-warning: #fbbf24;
+  --color-warning-bg: rgba(245, 158, 11, 0.12);
+  --color-warning-border: rgba(245, 158, 11, 0.3);
+
+  /* Note Color Accent Themes for Dark Mode */
+  --color-amber-bg: rgba(245, 158, 11, 0.1);
+  --color-amber-border: rgba(245, 158, 11, 0.3);
+  --color-emerald-bg: rgba(16, 185, 129, 0.1);
+  --color-emerald-border: rgba(16, 185, 129, 0.3);
+  --color-indigo-bg: rgba(99, 102, 241, 0.1);
+  --color-indigo-border: rgba(99, 102, 241, 0.3);
+  --color-rose-bg: rgba(244, 63, 94, 0.1);
+  --color-rose-border: rgba(244, 63, 94, 0.3);
+  --color-sky-bg: rgba(14, 165, 233, 0.1);
+  --color-sky-border: rgba(14, 165, 233, 0.3);
+  --color-violet-bg: rgba(168, 85, 247, 0.1);
+  --color-violet-border: rgba(168, 85, 247, 0.3);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 2px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 16px 36px -8px rgba(0, 0, 0, 0.7);
+  --shadow-xl: 0 24px 50px -12px rgba(0, 0, 0, 0.85);
+}
+
+/* Global Reset & Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+body {
+  font-family: var(--font-family-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-main);
+  background-color: var(--bg-app);
+  background-image: var(--bg-app-gradient);
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-faint);
+}
+
+/* Accessibility Focus Ring */
+:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

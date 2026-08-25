@@ -1,0 +1,27 @@
+{
+  "name": "notes-crud-app",
+  "version": "2.0.0",
+  "description": "Full-Stack Notes CRUD Web Application with React, Node.js, Express, and MongoDB",
+  "main": "notes app/server/server.js",
+  "scripts": {
+    "install:client": "cd \"notes app/client\" && npm install",
+    "install:server": "cd \"notes app/server\" && npm install",
+    "install:all": "npm run install:server && npm run install:client",
+    "build:client": "cd \"notes app/client\" && npm run build",
+    "build": "npm run install:server && npm run install:client && npm run build:client",
+    "start": "node \"notes app/server/server.js\"",
+    "dev:server": "cd \"notes app/server\" && npm run dev",
+    "dev:client": "cd \"notes app/client\" && npm run dev"
+  },
+  "keywords": [
+    "notes",
+    "crud",
+    "react",
+    "express",
+    "mongodb",
+    "vite",
+    "glassmorphism"
+  ],
+  "author": "jeevan-bhat",
+  "license": "MIT"
+}
